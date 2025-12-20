@@ -1,0 +1,95 @@
+version: 2
+
+seeds:
+  - name: acme_employee_feed
+    description: |
+      Raw employee feed from Acme Corp.
+      
+      This seed file simulates the raw data that would be loaded from Acme's 
+      HR system. In production, this would be an external table or staged data
+      from their SFTP feed.
+      
+      ## Schema Notes
+      - Names are split into fname/lname
+      - start_dt is a string that needs casting to DATE
+      - rate_per_hour is the billing rate
+      
+    columns:
+      - name: emp_id
+        description: Acme's internal employee identifier
+        tests:
+          - unique
+          - not_null
+      - name: fname
+        description: First name
+      - name: lname
+        description: Last name
+      - name: email_address
+        description: Work email
+      - name: mobile
+        description: Mobile phone in US format
+      - name: start_dt
+        description: Start date as string (YYYY-MM-DD)
+      - name: rate_per_hour
+        description: Hourly billing rate
+      - name: dept
+        description: Department name
+        
+  - name: globex_staff_records
+    description: |
+      Raw staff records from Globex Corporation.
+      
+      Globex provides data in a different format than Acme:
+      - Full name is already combined
+      - Uses 'onboard_date' instead of 'start_dt'
+      - Has department_code instead of department name
+      
+    columns:
+      - name: staff_id
+        description: Globex staff identifier
+        tests:
+          - unique
+          - not_null
+      - name: full_name
+        description: Complete name (already combined)
+      - name: work_email
+        description: Work email address
+      - name: phone
+        description: Phone number (short format)
+      - name: onboard_date
+        description: Onboarding date (DATE type)
+      - name: pay_rate
+        description: Hourly pay rate
+      - name: department_code
+        description: 3-letter department code
+        
+  - name: wayne_enterprises_workers
+    description: |
+      Raw worker data from Wayne Enterprises.
+      
+      Wayne Enterprises uses yet another schema:
+      - first_name/last_name split
+      - hire_date as proper DATE
+      - hourly_wage instead of rate
+      - division instead of department
+      
+    columns:
+      - name: worker_id
+        description: Wayne Enterprises worker ID
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: First name
+      - name: last_name
+        description: Last name
+      - name: email
+        description: Email address
+      - name: contact_phone
+        description: Contact phone
+      - name: hire_date
+        description: Hire date
+      - name: hourly_wage
+        description: Hourly wage rate
+      - name: division
+        description: Business division

@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  - name: stg_candidates_unioned
+    description: |
+      Unified staging model that combines candidate data from all clients.
+      
+      This model is config-driven - it automatically reads client mapping 
+      configurations from YAML files and unions them together. When a new 
+      client is onboarded via the Client Mapping Portal, their data is 
+      automatically included in this model without any SQL changes.
+      
+      ## How it works
+      1. Client mappings are defined in `models/staging/client_mappings/*.yml`
+      2. The `get_client_mappings()` macro reads these configurations
+      3. This model generates UNION ALL statements for each client
+      4. Each client's source fields are mapped to the standard target schema
+      
+      ## Adding a new client
+      New clients are added via the Client Mapping Portal UI. The portal:
+      1. Generates a YAML mapping file
+      2. Commits it to the repository
+      3. Creates a pull request for review
+      4. After merge, this model automatically includes the new client
+      
+    columns:
+      - name: candidate_id
+        description: Unique identifier for the candidate (sourced from client system)
+        tests:
+          - not_null
+          - unique
+          
+      - name: full_name
+        description: Full name of the candidate
+        tests:
+          - not_null
+          
+      - name: email
+        description: Primary email address
+        tests:
+          - not_null
+          
+      - name: phone_number
+        description: Contact phone number (optional)
+        
+      - name: hire_date
+        description: Date the candidate was hired/placed
+        tests:
+          - not_null
+          
+      - name: hourly_rate
+        description: Hourly billing rate in USD
+        
+      - name: client_code
+        description: Code identifying which client this candidate belongs to
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['ACME', 'GLOBEX', 'WAYNE']
+              config:
+                severity: warn  # Warn on new clients until they're added to this list
+                
+      - name: _loaded_at
+        description: Timestamp when this record was loaded
+        
+      - name: _source_system
+        description: Client code indicating the source system
+        
+      - name: _source_table
+        description: Name of the source seed/table this record came from

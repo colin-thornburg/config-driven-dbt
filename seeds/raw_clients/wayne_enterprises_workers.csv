@@ -1,0 +1,6 @@
+worker_id,first_name,last_name,email,contact_phone,hire_date,hourly_wage,division
+WE-001,Bruce,Wayne,bwayne@wayneent.com,555-BATMAN,2024-02-01,250.00,Executive
+WE-002,Lucius,Fox,lfox@wayneent.com,555-0301,2024-02-01,150.00,R&D
+WE-003,Alfred,Pennyworth,apennyworth@wayneent.com,555-0302,2024-02-01,85.00,Operations
+WE-004,Barbara,Gordon,bgordon@wayneent.com,555-0303,2024-02-15,72.00,IT
+WE-005,Dick,Grayson,dgrayson@wayneent.com,555-0304,2024-03-01,68.00,Security

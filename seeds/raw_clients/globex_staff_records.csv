@@ -1,0 +1,7 @@
+staff_id,full_name,work_email,phone,onboard_date,pay_rate,department_code
+GLX-5001,Robert Johnson,rjohnson@globex.com,555-0199,2024-01-10,52.00,ENG
+GLX-5002,Maria Garcia,mgarcia@globex.com,555-0200,2024-01-15,49.50,MKT
+GLX-5003,James Williams,jwilliams@globex.com,555-0201,2024-01-20,55.25,FIN
+GLX-5004,Patricia Brown,pbrown@globex.com,555-0202,2024-02-01,47.00,OPS
+GLX-5005,Michael Davis,mdavis@globex.com,555-0203,2024-02-10,61.00,ENG
+GLX-5006,Jennifer Miller,jmiller@globex.com,555-0204,2024-02-15,53.75,MKT

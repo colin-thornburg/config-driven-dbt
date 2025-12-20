@@ -1,0 +1,113 @@
+version: 2
+
+models:
+  - name: dim_candidate
+    description: |
+      Production-ready candidate dimension combining all client candidate data.
+      
+      This dimension provides a unified view of all candidates across all clients
+      managed by ManpowerGroup. Each record represents a unique candidate with
+      standardized attributes regardless of which client system they originated from.
+      
+      ## Key Features
+      - Surrogate key (`candidate_key`) for warehouse joins
+      - Natural key (`candidate_id`) preserved from source
+      - Derived fields for analytics (tenure, rate tier, etc.)
+      - Full audit trail via metadata columns
+      
+      ## Usage
+      ```sql
+      SELECT 
+          client_code,
+          rate_tier,
+          COUNT(*) as candidate_count,
+          AVG(hourly_rate) as avg_rate
+      FROM {{ ref('dim_candidate') }}
+      GROUP BY 1, 2
+      ```
+      
+    columns:
+      - name: candidate_key
+        description: Surrogate key for the candidate dimension (hash of client_code + candidate_id)
+        tests:
+          - unique
+          - not_null
+          
+      - name: candidate_id
+        description: Natural key - the candidate ID from the source client system
+        tests:
+          - not_null
+          
+      - name: full_name
+        description: Full name of the candidate
+        tests:
+          - not_null
+          
+      - name: email
+        description: Primary email address for the candidate
+        tests:
+          - not_null
+          
+      - name: phone_number
+        description: Contact phone number (format varies by client)
+        
+      - name: hire_date
+        description: Date the candidate was hired or placed
+        tests:
+          - not_null
+          
+      - name: hourly_rate
+        description: Hourly billing rate in USD
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000
+              config:
+                severity: warn
+                
+      - name: client_code
+        description: Code identifying the client this candidate is associated with
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_client')
+              field: client_code
+              config:
+                severity: warn  # Warn until dim_client is implemented
+                
+      - name: hire_year
+        description: Year extracted from hire_date for easy filtering
+        
+      - name: hire_month
+        description: Month extracted from hire_date for easy filtering
+        
+      - name: tenure_days
+        description: Number of days since hire_date
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              config:
+                severity: error
+                
+      - name: rate_tier
+        description: |
+          Classification of candidate based on hourly rate:
+          - Executive: $100+
+          - Senior: $60-99
+          - Mid-Level: $40-59
+          - Entry: Below $40
+        tests:
+          - accepted_values:
+              values: ['Executive', 'Senior', 'Mid-Level', 'Entry']
+              
+      - name: _loaded_at
+        description: Timestamp when this record was loaded into staging
+        
+      - name: _source_system
+        description: Client code indicating the original source system
+        
+      - name: _source_table
+        description: Name of the source seed/table this record originated from
+        
+      - name: _dim_updated_at
+        description: Timestamp when this dimension record was last updated

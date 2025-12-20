@@ -1,0 +1,9 @@
+emp_id,fname,lname,email_address,mobile,start_dt,rate_per_hour,dept
+EMP-99201,John,Doe,john.doe@acme.com,(317) 555-1234,2024-03-15,45.50,Engineering
+EMP-99202,Jane,Smith,jane.smith@acme.com,(317) 555-2345,2024-03-18,52.00,Marketing
+EMP-99203,Bob,Wilson,bob.w@acme.com,(317) 555-3456,2024-03-20,48.75,Engineering
+EMP-99204,Alice,Johnson,alice.j@acme.com,(317) 555-4567,2024-03-22,55.00,Finance
+EMP-99205,Charlie,Brown,charlie.b@acme.com,(317) 555-5678,2024-03-25,42.25,Operations
+EMP-99206,Diana,Ross,diana.r@acme.com,(317) 555-6789,2024-04-01,58.00,Engineering
+EMP-99207,Edward,Chen,edward.c@acme.com,(317) 555-7890,2024-04-05,51.50,Marketing
+EMP-99208,Fiona,Garcia,fiona.g@acme.com,(317) 555-8901,2024-04-10,47.00,Finance
