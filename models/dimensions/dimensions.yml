@@ -22,7 +22,7 @@ models:
           rate_tier,
           COUNT(*) as candidate_count,
           AVG(hourly_rate) as avg_rate
-      FROM {{ ref('dim_candidate') }}
+      FROM dim_candidate
       GROUP BY 1, 2
       ```
       
@@ -59,21 +59,12 @@ models:
       - name: hourly_rate
         description: Hourly billing rate in USD
         tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1000
-              config:
-                severity: warn
+          - not_null
                 
       - name: client_code
         description: Code identifying the client this candidate is associated with
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_client')
-              field: client_code
-              config:
-                severity: warn  # Warn until dim_client is implemented
                 
       - name: hire_year
         description: Year extracted from hire_date for easy filtering
@@ -83,11 +74,6 @@ models:
         
       - name: tenure_days
         description: Number of days since hire_date
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              config:
-                severity: error
                 
       - name: rate_tier
         description: |

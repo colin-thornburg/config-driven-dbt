@@ -40,6 +40,12 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   my_new_project:
-    # Applies to all files under models/example/
-    example:
+    # Staging models as views for flexibility
+    staging:
+      +materialized: view
+      +tags: ['staging']
+    
+    # Dimension models as tables for performance
+    dimensions:
       +materialized: table
+      +tags: ['dimension']

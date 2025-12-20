@@ -22,7 +22,7 @@ WITH staged_candidates AS (
 final AS (
     SELECT
         -- Generate a surrogate key combining client and source ID
-        {{ dbt_utils.generate_surrogate_key(['client_code', 'candidate_id']) }} AS candidate_key,
+        MD5(client_code || '-' || candidate_id) AS candidate_key,
         
         -- Natural key from source
         candidate_id,
