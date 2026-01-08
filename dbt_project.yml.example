@@ -1,0 +1,33 @@
+# Example: How to make client mappings truly dynamic using dbt vars
+
+# In dbt_project.yml, add:
+vars:
+  client_mappings:
+    - client_code: ACME
+      client_name: Acme Corp
+      source_table: acme_employee_feed
+      target_model: dim_candidate
+      field_mappings:
+        candidate_id: emp_id
+        full_name: "fname || ' ' || lname"
+        email: email_address
+        phone_number: mobile
+        hire_date: "TRY_CAST(start_dt AS DATE)"
+        hourly_rate: rate_per_hour
+        client_code: "'ACME'"
+    
+    - client_code: GLOBEX
+      client_name: Globex Corporation
+      source_table: globex_staff_records
+      target_model: dim_candidate
+      field_mappings:
+        candidate_id: staff_id
+        full_name: full_name
+        email: work_email
+        phone_number: phone
+        hire_date: onboard_date
+        hourly_rate: pay_rate
+        client_code: "'GLOBEX'"
+
+# Then the macro can read: var('client_mappings')
+

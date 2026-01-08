@@ -38,6 +38,50 @@ clean-targets:         # directories to be removed by `dbt clean`
 # continue to be built as views. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
+# Client mappings configuration
+# This is read dynamically by the get_client_mappings() macro
+# The Client Mapping Portal updates this automatically
+vars:
+  client_mappings:
+    - client_code: ACME
+      client_name: Acme Corp
+      source_table: acme_employee_feed
+      target_model: dim_candidate
+      field_mappings:
+        candidate_id: emp_id
+        full_name: "fname || ' ' || lname"
+        email: email_address
+        phone_number: mobile
+        hire_date: "TRY_CAST(start_dt AS DATE)"
+        hourly_rate: rate_per_hour
+        client_code: "'ACME'"
+    
+    - client_code: GLOBEX
+      client_name: Globex Corporation
+      source_table: globex_staff_records
+      target_model: dim_candidate
+      field_mappings:
+        candidate_id: staff_id
+        full_name: full_name
+        email: work_email
+        phone_number: phone
+        hire_date: onboard_date
+        hourly_rate: pay_rate
+        client_code: "'GLOBEX'"
+    
+    - client_code: WAYNE
+      client_name: Wayne Enterprises
+      source_table: wayne_enterprises_workers
+      target_model: dim_candidate
+      field_mappings:
+        candidate_id: worker_id
+        full_name: "first_name || ' ' || last_name"
+        email: email
+        phone_number: contact_phone
+        hire_date: hire_date
+        hourly_rate: hourly_wage
+        client_code: "'WAYNE'"
+
 models:
   my_new_project:
     # Staging models as views for flexibility
