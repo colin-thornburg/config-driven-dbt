@@ -15,7 +15,22 @@
             {% endfor %}
     #}
     
-    {% set all_mappings = var('client_mappings', []) %}
+    {% set all_mappings = var('client_mappings', []) %},
+        {
+            'client_code': 'ACME_3',
+            'client_name': 'ACME_3',
+            'source_table': 'employee_feed',
+            'target_model': 'dim_candidate',
+            'field_mappings': {
+                'candidate_id': "emp_id",
+                'email': "email_address",
+                'phone_number': "mobile",
+                'hire_date': "start_dt",
+                'hourly_rate': "rate_per_hour",
+                'full_name': "CONCAT(fname, ' ', lname)",
+                'client_code': ''ACME_3''
+            }
+        }
     {% set filtered_mappings = [] %}
     
     {# Filter by target_model if specified #}
