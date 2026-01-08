@@ -46,6 +46,18 @@ vars:
         hire_date: hire_date
         hourly_rate: hourly_wage
         client_code: "'WAYNE'"
+    - client_code: ACME
+      client_name: ACME
+      source_table: employee_feed
+      target_model: dim_candidate
+      field_mappings:
+        candidate_id: emp_id
+        full_name: CONCAT(fname, ' ', lname)
+        email: email_address
+        phone_number: mobile
+        hire_date: start_dt
+        hourly_rate: rate_per_hour
+        client_code: "'ACME'"
 models:
   my_new_project:
     staging:

@@ -1,0 +1,16 @@
+version: 2
+client_config:
+  client_code: ACME
+  client_name: ACME
+  source_table: employee_feed
+  target_model: dim_candidate
+  created_by: client-mapping-portal
+  created_at: '2026-01-08T13:27:40.155Z'
+  field_mappings:
+    candidate_id: emp_id
+    full_name: CONCAT(fname, ' ', lname)
+    email: email_address
+    phone_number: mobile
+    hire_date: start_dt
+    hourly_rate: rate_per_hour
+    client_code: '''ACME'''
