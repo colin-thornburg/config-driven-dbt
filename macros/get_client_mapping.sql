@@ -10,37 +10,7 @@
             {% for client in clients %}
                 -- Process {{ client.client_code }}
             {% endfor %}
-    #},
-        {
-            'client_code': 'ACME',
-            'client_name': 'ACME',
-            'source_table': 'employee_feed',
-            'target_model': 'dim_candidate',
-            'field_mappings': {
-                'candidate_id': "emp_id",
-                'full_name': "CONCAT(fname, lname)",
-                'email': "email_address",
-                'phone_number': "mobile",
-                'hire_date': "start_dt",
-                'hourly_rate': "rate_per_hour",
-                'client_code': ''ACME''
-            }
-        },
-        {
-            'client_code': 'ACME_2',
-            'client_name': 'Acme_2',
-            'source_table': 'employee_feed',
-            'target_model': 'dim_candidate',
-            'field_mappings': {
-                'candidate_id': "emp_id",
-                'full_name': "CONCAT(fname, ' ', lname)",
-                'email': "email_address",
-                'phone_number': "mobile",
-                'hire_date': "start_dt",
-                'hourly_rate': "rate_per_hour",
-                'client_code': ''ACME_2''
-            }
-        }
+    #}
     
     {% set mappings = [] %}
     
@@ -93,6 +63,21 @@
                 'hire_date': 'hire_date',
                 'hourly_rate': 'hourly_wage',
                 'client_code': "'WAYNE'"
+            }
+        },
+        {
+            'client_code': 'ACME_2',
+            'client_name': 'Acme_2',
+            'source_table': 'acme_employee_feed',
+            'target_model': 'dim_candidate',
+            'field_mappings': {
+                'candidate_id': 'emp_id',
+                'full_name': "fname || ' ' || lname",
+                'email': 'email_address',
+                'phone_number': 'mobile',
+                'hire_date': 'TRY_CAST(start_dt AS DATE)',
+                'hourly_rate': 'rate_per_hour',
+                'client_code': "'ACME_2'"
             }
         }
     ] %}
