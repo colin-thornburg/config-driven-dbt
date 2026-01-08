@@ -25,6 +25,21 @@
                 'hourly_rate': "rate_per_hour",
                 'client_code': ''ACME''
             }
+        },
+        {
+            'client_code': 'ACME_2',
+            'client_name': 'Acme_2',
+            'source_table': 'employee_feed',
+            'target_model': 'dim_candidate',
+            'field_mappings': {
+                'candidate_id': "emp_id",
+                'full_name': "CONCAT(fname, ' ', lname)",
+                'email': "email_address",
+                'phone_number': "mobile",
+                'hire_date': "start_dt",
+                'hourly_rate': "rate_per_hour",
+                'client_code': ''ACME_2''
+            }
         }
     
     {% set mappings = [] %}
