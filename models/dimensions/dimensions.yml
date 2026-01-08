@@ -6,7 +6,7 @@ models:
       Production-ready candidate dimension combining all client candidate data.
       
       This dimension provides a unified view of all candidates across all clients
-      managed by ManpowerGroup. Each record represents a unique candidate with
+      in the data platform. Each record represents a unique candidate with
       standardized attributes regardless of which client system they originated from.
       
       ## Key Features

@@ -9,7 +9,7 @@ client_config:
   client_name: Globex Corporation
   source_table: globex_staff_records
   target_model: dim_candidate
-  created_by: pavel.analyst@manpower.com
+  created_by: data.analyst@company.com
   created_at: '2024-12-18T10:15:00Z'
   
   field_mappings:

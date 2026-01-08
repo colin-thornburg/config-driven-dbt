@@ -9,7 +9,7 @@ client_config:
   client_name: Wayne Enterprises
   source_table: wayne_enterprises_workers
   target_model: dim_candidate
-  created_by: pavel.analyst@manpower.com
+  created_by: data.analyst@company.com
   created_at: '2024-12-17T09:00:00Z'
   
   field_mappings:

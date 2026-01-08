@@ -77,7 +77,7 @@
         {{ select_clause }},
         CURRENT_TIMESTAMP() AS _loaded_at,
         '{{ client_config.client_code }}' AS _source_client
-    FROM {{ "{{ ref('" ~ client_config.source_table ~ "') }}" }}
+    FROM {{ ref(client_config.source_table) }}
 {% endmacro %}
 
 
