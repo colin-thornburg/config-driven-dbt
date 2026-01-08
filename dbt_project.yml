@@ -1,61 +1,27 @@
-
-# Name your project! Project names should contain only lowercase characters
-# and underscores. A good package name should reflect your organization's
-# name or the intended use of these models
-name: 'my_new_project'
-version: '1.0.0'
+name: my_new_project
+version: 1.0.0
 dbt-cloud:
-    project-id: 70403103995699
-
+  project-id: 70403103995699
 config-version: 2
-
-# This setting configures which "profile" dbt uses for this project.
-profile: 'default'
-
-# These configurations specify where dbt should look for different types of files.
-# The `model-paths` config, for example, states that models in this project can be
-# found in the "models/" directory. You probably won't need to change these!
-model-paths: ["models"]
-analysis-paths: ["analyses"]
-test-paths: ["tests"]
-seed-paths: ["seeds"]
-macro-paths: ["macros"]
-snapshot-paths: ["snapshots"]
-
-target-path: "target"  # directory which will store compiled SQL files
-clean-targets:         # directories to be removed by `dbt clean`
-  - "target"
-  - "dbt_packages"
-
-
-# Configuring models
-# Full documentation: https://docs.getdbt.com/docs/configuring-models
-
-# In dbt, the default materialization for a model is a view. This means, when you run 
-# dbt run or dbt build, all of your models will be built as a view in your data platform. 
-# The configuration below will override this setting for models in the example folder to 
-# instead be materialized as tables. Any models you add to the root of the models folder will 
-# continue to be built as views. These settings can be overridden in the individual model files
-# using the `{{ config(...) }}` macro.
-
-# Client mappings configuration
-# This is read dynamically by the get_client_mappings() macro
-# The Client Mapping Portal updates this automatically
+profile: default
+model-paths:
+  - models
+analysis-paths:
+  - analyses
+test-paths:
+  - tests
+seed-paths:
+  - seeds
+macro-paths:
+  - macros
+snapshot-paths:
+  - snapshots
+target-path: target
+clean-targets:
+  - target
+  - dbt_packages
 vars:
   client_mappings:
-    - client_code: ACME
-      client_name: Acme Corp
-      source_table: acme_employee_feed
-      target_model: dim_candidate
-      field_mappings:
-        candidate_id: emp_id
-        full_name: "fname || ' ' || lname"
-        email: email_address
-        phone_number: mobile
-        hire_date: "TRY_CAST(start_dt AS DATE)"
-        hourly_rate: rate_per_hour
-        client_code: "'ACME'"
-    
     - client_code: GLOBEX
       client_name: Globex Corporation
       source_table: globex_staff_records
@@ -68,54 +34,25 @@ vars:
         hire_date: onboard_date
         hourly_rate: pay_rate
         client_code: "'GLOBEX'"
-    
     - client_code: WAYNE
       client_name: Wayne Enterprises
       source_table: wayne_enterprises_workers
       target_model: dim_candidate
       field_mappings:
         candidate_id: worker_id
-        full_name: "first_name || ' ' || last_name"
+        full_name: first_name || ' ' || last_name
         email: email
         phone_number: contact_phone
         hire_date: hire_date
         hourly_rate: hourly_wage
         client_code: "'WAYNE'"
-    
-    - client_code: ACME_2
-      client_name: ACME_2
-      source_table: acme_employee_feed
-      target_model: dim_candidate
-      field_mappings:
-        candidate_id: emp_id
-        email: email_address
-        phone_number: mobile
-        hire_date: start_dt
-        hourly_rate: rate_per_hour
-        full_name: "fname || ' ' || lname"
-        client_code: "'ACME_2'"
-    
-    - client_code: ACME_3
-      client_name: ACME_3
-      source_table: acme_employee_feed
-      target_model: dim_candidate
-      field_mappings:
-        candidate_id: emp_id
-        email: email_address
-        phone_number: mobile
-        hire_date: start_dt
-        hourly_rate: rate_per_hour
-        full_name: "fname || ' ' || lname"
-        client_code: "'ACME_3'"
-
 models:
   my_new_project:
-    # Staging models as views for flexibility
     staging:
       +materialized: view
-      +tags: ['staging']
-    
-    # Dimension models as tables for performance
+      +tags:
+        - staging
     dimensions:
       +materialized: table
-      +tags: ['dimension']
+      +tags:
+        - dimension
