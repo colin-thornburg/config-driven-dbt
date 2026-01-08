@@ -48,11 +48,11 @@ vars:
         client_code: "'WAYNE'"
     - client_code: ACME
       client_name: ACME
-      source_table: employee_feed
+      source_table: acme_employee_feed
       target_model: dim_candidate
       field_mappings:
         candidate_id: emp_id
-        full_name: CONCAT(fname, ' ', lname)
+        full_name: fname || ' ' || lname
         email: email_address
         phone_number: mobile
         hire_date: start_dt
