@@ -1,0 +1,10 @@
+customer_id,first_name,last_name,email,phone,address_line1,city,state,postal_code,country,created_at,updated_at,is_active
+CUST001,Sarah,Johnson,sarah.johnson@email.com,555-0101,123 Oak Street,Austin,TX,78701,USA,2024-01-15 10:30:00,2024-06-20 14:15:00,true
+CUST002,Michael,Chen,michael.chen@email.com,555-0102,456 Pine Avenue,Seattle,WA,98101,USA,2024-02-20 09:45:00,2024-07-10 11:30:00,true
+CUST003,Emily,Rodriguez,emily.rod@email.com,555-0103,789 Maple Drive,Denver,CO,80202,USA,2024-03-10 14:20:00,2024-03-10 14:20:00,true
+CUST004,David,Kim,david.kim@email.com,555-0104,321 Cedar Lane,Portland,OR,97201,USA,2024-04-05 16:00:00,2024-08-15 09:45:00,true
+CUST005,Jessica,Williams,jess.williams@email.com,555-0105,654 Birch Road,San Diego,CA,92101,USA,2024-05-12 11:15:00,2024-05-12 11:15:00,false
+CUST006,Robert,Martinez,r.martinez@email.com,555-0106,987 Elm Street,Phoenix,AZ,85001,USA,2024-06-01 08:30:00,2024-09-01 16:20:00,true
+CUST007,Amanda,Taylor,a.taylor@email.com,555-0107,147 Willow Way,Chicago,IL,60601,USA,2024-07-18 13:45:00,2024-07-18 13:45:00,true
+CUST008,James,Anderson,james.a@email.com,555-0108,258 Spruce Court,Boston,MA,02101,USA,2024-08-22 10:00:00,2024-10-05 12:30:00,true
+

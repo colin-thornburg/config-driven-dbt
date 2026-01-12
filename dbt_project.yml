@@ -68,3 +68,12 @@ models:
       +materialized: table
       +tags:
         - dimension
+    platform_demo:
+      +materialized: table
+      +tags:
+        - platform
+
+seeds:
+  my_new_project:
+    platform_demo:
+      +schema: platform_demo

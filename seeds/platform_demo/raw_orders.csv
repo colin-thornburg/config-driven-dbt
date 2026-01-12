@@ -1,0 +1,14 @@
+order_id,customer_id,order_date,order_status,shipping_address,shipping_city,shipping_state,shipping_postal,total_amount,discount_amount,tax_amount,payment_method,transaction_time,ingestion_time
+ORD00001,CUST001,2024-06-15,completed,123 Oak Street,Austin,TX,78701,119.98,0.00,9.60,credit_card,2024-06-15 10:30:15,2024-06-15 11:00:00
+ORD00002,CUST002,2024-06-16,completed,456 Pine Avenue,Seattle,WA,98101,89.99,10.00,6.40,debit_card,2024-06-16 14:22:33,2024-06-16 15:00:00
+ORD00003,CUST001,2024-06-20,completed,123 Oak Street,Austin,TX,78701,49.99,0.00,4.00,credit_card,2024-06-20 09:15:42,2024-06-20 10:00:00
+ORD00004,CUST003,2024-06-25,shipped,789 Maple Drive,Denver,CO,80202,179.98,20.00,12.80,paypal,2024-06-25 16:45:18,2024-06-25 17:00:00
+ORD00005,CUST004,2024-07-01,completed,321 Cedar Lane,Portland,OR,97201,299.99,30.00,21.60,credit_card,2024-07-01 11:30:55,2024-07-01 12:00:00
+ORD00006,CUST002,2024-07-05,completed,456 Pine Avenue,Seattle,WA,98101,69.99,0.00,5.60,debit_card,2024-07-05 13:20:10,2024-07-05 14:00:00
+ORD00007,CUST005,2024-07-10,cancelled,654 Birch Road,San Diego,CA,92101,44.99,0.00,3.60,credit_card,2024-07-10 15:55:22,2024-07-10 16:00:00
+ORD00008,CUST006,2024-07-15,completed,987 Elm Street,Phoenix,AZ,85001,149.99,15.00,10.80,paypal,2024-07-15 10:10:30,2024-07-15 11:00:00
+ORD00009,CUST007,2024-07-20,processing,147 Willow Way,Chicago,IL,60601,219.97,0.00,17.60,credit_card,2024-07-20 12:40:45,2024-07-20 13:00:00
+ORD00010,CUST008,2024-07-25,completed,258 Spruce Court,Boston,MA,02101,79.99,5.00,6.00,debit_card,2024-07-25 14:25:18,2024-07-25 15:00:00
+ORD00011,CUST001,2024-08-01,completed,123 Oak Street,Austin,TX,78701,39.99,0.00,3.20,credit_card,2024-08-01 09:50:33,2024-08-01 10:00:00
+ORD00012,CUST003,2024-08-05,shipped,789 Maple Drive,Denver,CO,80202,59.99,0.00,4.80,paypal,2024-08-05 11:15:27,2024-08-05 12:00:00
+

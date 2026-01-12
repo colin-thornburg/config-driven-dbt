@@ -1,0 +1,102 @@
+version: 2
+
+seeds:
+  - name: raw_customers
+    description: |
+      Raw customer data for Platform Entity Designer demo.
+      
+      This represents a typical customer master data feed that would come from
+      a CRM or ERP system. The Platform Entity Designer would use this to 
+      create a dim_customer dimension with automatic control fields.
+      
+    columns:
+      - name: customer_id
+        description: Unique customer identifier
+        tests:
+          - unique
+          - not_null
+      - name: email
+        description: Customer email address
+        tests:
+          - unique
+      - name: is_active
+        description: Whether the customer account is active
+
+  - name: raw_products
+    description: |
+      Raw product catalog data for Platform Entity Designer demo.
+      
+      This represents product master data from an inventory or catalog system.
+      The Platform Entity Designer would use this to create a dim_product 
+      dimension with automatic SCD Type 2 handling.
+      
+    columns:
+      - name: product_id
+        description: Unique product identifier
+        tests:
+          - unique
+          - not_null
+      - name: sku
+        description: Stock Keeping Unit
+        tests:
+          - unique
+
+  - name: raw_orders
+    description: |
+      Raw order/transaction data for Platform Entity Designer demo.
+      
+      This represents transactional order data from an e-commerce system.
+      The Platform Entity Designer would use this to create a fact_orders 
+      fact table with automatic control fields for CDC and ingestion tracking.
+      
+      Note: Contains transaction_time and ingestion_time columns that the
+      Platform would automatically detect and use for incremental processing.
+      
+    columns:
+      - name: order_id
+        description: Unique order identifier
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: Foreign key to customers
+        tests:
+          - not_null
+          - relationships:
+              to: ref('raw_customers')
+              field: customer_id
+      - name: order_status
+        description: Current order status
+        tests:
+          - accepted_values:
+              values: ['pending', 'processing', 'shipped', 'completed', 'cancelled']
+
+  - name: raw_order_items
+    description: |
+      Raw order line items for Platform Entity Designer demo.
+      
+      This represents the many-to-many relationship between orders and products.
+      The Platform Entity Designer would use this to create a bridge table
+      (fact_order_items) that joins orders to products.
+      
+    columns:
+      - name: order_item_id
+        description: Unique line item identifier
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: Foreign key to orders
+        tests:
+          - not_null
+          - relationships:
+              to: ref('raw_orders')
+              field: order_id
+      - name: product_id
+        description: Foreign key to products
+        tests:
+          - not_null
+          - relationships:
+              to: ref('raw_products')
+              field: product_id
+
