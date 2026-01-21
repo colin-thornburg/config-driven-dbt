@@ -1,31 +1,13 @@
 version: 2
-
-# ════════════════════════════════════════════════════════════════════════════════
-# PLATFORM ENTITY DEFINITIONS
-# ════════════════════════════════════════════════════════════════════════════════
-#
-# This file demonstrates how users define entity metadata for the Platform Layer.
-# 
-# The `meta.platform` section is read by platform macros to:
-# - Validate relationships at compile time
-# - Auto-generate appropriate control fields
-# - Enable runtime optimization based on entity relationships
-#
-# ════════════════════════════════════════════════════════════════════════════════
-
 models:
-  # ══════════════════════════════════════════════════════════════════════════════
-  # DIMENSION: Customer
-  # ══════════════════════════════════════════════════════════════════════════════
   - name: dim_customer_platform
     description: |
       Customer dimension with platform-managed SCD Type 2 handling.
-      
+
       **Platform Features:**
       - Automatic surrogate key generation
       - SCD Type 2 valid_from/valid_to tracking
       - CDC timestamp tracking from source
-      
     meta:
       platform:
         entity_type: dimension
@@ -39,13 +21,11 @@ models:
           - address_line1
           - city
           - state
-        # Relationships FROM this entity
         relationships:
           - target: fact_orders_platform
             join_key: customer_id
             cardinality: one_to_many
-            description: "A customer can have many orders"
-            
+            description: A customer can have many orders
     columns:
       - name: customer_id
         description: Natural key from source system
@@ -60,19 +40,14 @@ models:
         description: When this version was superseded (9999-12-31 if current)
       - name: _is_current
         description: TRUE if this is the current version
-
-  # ══════════════════════════════════════════════════════════════════════════════
-  # DIMENSION: Product
-  # ══════════════════════════════════════════════════════════════════════════════
   - name: dim_product_platform
     description: |
       Product dimension with platform-managed SCD Type 2 handling.
-      
+
       **Platform Features:**
       - Automatic surrogate key generation
       - Price change tracking via SCD Type 2
       - Margin calculations
-      
     meta:
       platform:
         entity_type: dimension
@@ -88,8 +63,7 @@ models:
           - target: fact_order_items_platform
             join_key: product_id
             cardinality: one_to_many
-            description: "A product can be in many order items"
-            
+            description: A product can be in many order items
     columns:
       - name: product_id
         description: Natural key from source system
@@ -100,43 +74,35 @@ models:
         description: Calculated profit margin (unit_price - cost_price)
       - name: margin_pct
         description: Margin as percentage
-
-  # ══════════════════════════════════════════════════════════════════════════════
-  # FACT: Orders
-  # ══════════════════════════════════════════════════════════════════════════════
   - name: fact_orders_platform
     description: |
       Order fact table with platform-managed CDC and incremental processing.
-      
+
       **Platform Features:**
       - Automatic transaction_time and ingestion_time tracking
       - Incremental loading based on CDC timestamps
       - Source system tagging
       - Relationship validation to dimensions
-      
     meta:
       platform:
         entity_type: fact
         primary_key: order_id
-        grain: "One row per order"
+        grain: One row per order
         source_system: ecommerce_platform
-        # CDC configuration for incremental processing
         cdc_config:
           transaction_time_column: transaction_time
           ingestion_time_column: ingestion_time
           incremental_strategy: merge
-        # Relationships TO dimensions (foreign keys)
         relationships:
           - target: dim_customer_platform
             join_key: customer_id
             cardinality: many_to_one
             required: true
-            description: "Each order belongs to one customer"
+            description: Each order belongs to one customer
           - target: fact_order_items_platform
             join_key: order_id
             cardinality: one_to_many
-            description: "An order has many line items"
-            
+            description: An order has many line items
     columns:
       - name: order_id
         description: Unique order identifier
@@ -153,37 +119,30 @@ models:
         description: Platform-managed CDC ingestion timestamp
       - name: _source_system
         description: Source system identifier (ecommerce_platform)
-
-  # ══════════════════════════════════════════════════════════════════════════════
-  # BRIDGE: Order Items (Many-to-Many between Orders and Products)
-  # ══════════════════════════════════════════════════════════════════════════════
   - name: fact_order_items_platform
     description: |
       Order line items bridge table connecting orders to products.
-      
+
       **Platform Features:**
       - Automatic relationship tracking fields
       - Link validity management
       - Grain enforcement
-      
     meta:
       platform:
         entity_type: bridge
         primary_key: order_item_id
-        grain: "One row per product per order"
-        # Bridge tables have multiple relationships
+        grain: One row per product per order
         relationships:
           - target: fact_orders_platform
             join_key: order_id
             cardinality: many_to_one
             required: true
-            description: "Each line item belongs to one order"
+            description: Each line item belongs to one order
           - target: dim_product_platform
             join_key: product_id
             cardinality: many_to_one
             required: true
-            description: "Each line item references one product"
-            
+            description: Each line item references one product
     columns:
       - name: order_item_id
         description: Unique line item identifier
@@ -202,4 +161,37 @@ models:
         description: Platform-managed timestamp when this link was created
       - name: _is_active
         description: Platform-managed flag for relationship validity
-
+  - name: dim_demo_test
+    description: Customer dimension for demo
+    meta:
+      platform:
+        entity_type: dimension
+        primary_key: customer_id
+        scd_type: 2
+        track_changes_on:
+          - email
+          - address_line1
+          - city
+    columns:
+      - name: email
+        description: Column email
+      - name: address_line1
+        description: Column address_line1
+      - name: city
+        description: Column city
+      - name: _surrogate_key
+        description: 'Platform-managed:  surrogate key'
+      - name: _valid_from
+        description: 'Platform-managed:  valid from'
+      - name: _valid_to
+        description: 'Platform-managed:  valid to'
+      - name: _is_current
+        description: 'Platform-managed:  is current'
+      - name: _loaded_at
+        description: 'Platform-managed:  loaded at'
+      - name: _source_schema
+        description: 'Platform-managed:  source schema'
+      - name: _model_name
+        description: 'Platform-managed:  model name'
+      - name: _dbt_run_id
+        description: 'Platform-managed:  dbt run id'
